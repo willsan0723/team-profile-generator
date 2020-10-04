@@ -1,7 +1,7 @@
 const Intern = require('../lib/Intern')
 
 test('create intern object', () => {
-    const employee = new Intern('Steve', 42, 'steve@steve.com', 'Intern', 'UofU')
+    const employee = new Intern('Steve', 42, 'steve@steve.com', 'UofU')
 
     expect(employee.getName()).toBe('Steve');
     expect(employee.getId()).toEqual(expect.any(Number));
