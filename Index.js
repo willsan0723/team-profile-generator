@@ -1,15 +1,15 @@
-const Intern = require('../lib/Intern')
-const Manager = require('../lib/Manager')
+const Intern = require('./lib/Intern')
+const Manager = require('./lib/Manager')
 const fs = require("fs");
 const inquirer = require("inquirer");
 const path = require("path");
 const Engineer = require('./lib/Engineer');
-
+const generateHTML = require("./utils/generateHTML");
 
 const teamMembers = [];
 const idArray = [];
 function engineerQuestions() {
-    inquirer.prompt([
+    return inquirer.prompt([
         {
             type: "input",
             name: "engineerName",
@@ -37,6 +37,9 @@ function engineerQuestions() {
                         return true;
                     }
                 }
+                else {
+                    return "Numbers only please."
+                }
             }
         },
         {
@@ -47,8 +50,8 @@ function engineerQuestions() {
                 const pass = answer.match(
                     /\S+@\S+\.\S+/
                 )
-                if (pass) {
-                    return "This e-mail address is already taken, please choose a different one."
+                if (!pass) {
+                    return `An e-mail address is required to have an "@" and an "."`;
                 }
                 else {
                     return true;
@@ -72,12 +75,12 @@ function engineerQuestions() {
         const engineer = new Engineer(answers.engineerName, answers.engineerID, answers.engineerEmail, answers.engineerGit);
         teamMembers.push(engineer);
         idArray.push(answers.engineerID);        
-        buildTeam();
+        return buildTeam();
     })
 }
 
 function buildTeam(){
-    inquirer.prompt([
+    return inquirer.prompt([
         {
             type: "list",
             name: "memberChoice",
@@ -95,7 +98,7 @@ function buildTeam(){
                 internQuestions()
                 break;
             default: 
-                createTeam()            
+                return createTeam()            
         }
     })
 }
@@ -106,8 +109,11 @@ function createTeam() {
     if (!fs.existsSync(OUTPUT_DIR)) {
       fs.mkdirSync(OUTPUT_DIR)
     }
-    fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
-  }
+    fs.writeFile(outputPath, generateHTML(teamMembers), err => {
+        
+    });
+    // console.log(teamMembers);
+}
 
-
+engineerQuestions();
 
