@@ -3,66 +3,111 @@ const Manager = require('../lib/Manager')
 const fs = require("fs");
 const inquirer = require("inquirer");
 const path = require("path");
-const generateHTML = require("./utils/generateHTML");
+const Engineer = require('./lib/Engineer');
 
-const questions = [ {
-    type: "input",
-    name: "title",
-    message: "What is the title of your project?"
-},
-{
-    type: "input",
-    name: "description",
-    message: "Provide a detailed description about your project:"
-},
-{
-    type: "input",
-    name: "installation",
-    message: "What are your installation instructions? Be as detailed as possible:"
-},
-{
-    type: "input",
-    name: "usage",
-    message: "Provide instructions and examples for use:"
-},
-{
-    type: "list",
-    name: "license",
-    message: "What license does your project have?",
-    choices: ["Apache", "BSD3", "MIT", "ISC"]
-},
-{   type: "input",
-    name: "contributing",
-    message: "What guidelines do you have for other developers for contributing to this project?"
-},
-{
-    type: "input",
-    name: "tests",
-    message: "Write any tests for your application here, then provide examples on how to run them:"
-},
-{
-    type: "input",
-    name: "user",
-    message: "What is your GitHub username?"
-},
-{
-    type: "input",
-    name: "mail",
-    message: "What is your e-mail address?"
-}
-];
 
-// function to write page
-function writeToFile(fileName, data) {
-    return fs.writeFileSync(path.join(process.cwd(), fileName), data)
-}
+const teamMembers = [];
+const idArray = [];
+function engineerQuestions() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "engineerName",
+            message: "What is the engineer's name?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "Please enter the engineer's name."
+            }
+        },
+        {
+            type: "input",
+            name: "engineerID",
+            message: "What is the engineer's id?",
+            validate: answer => {
+                const pass = answer.match(
+                    /^[1-9]\d*$/
+                )
+                if (pass) {
+                    if (idArray.includes(answer)) {
+                        return "This id number is already taken, please choose a different one."
+                    }
+                    else {
+                        return true;
+                    }
+                }
+            }
+        },
+        {
+            type: "input",
+            name: "engineerEmail",
+            message: "What is the engineer's e-mail?",
+            validate: answer => {
+                const pass = answer.match(
+                    /\S+@\S+\.\S+/
+                )
+                if (pass) {
+                    return "This e-mail address is already taken, please choose a different one."
+                }
+                else {
+                    return true;
+                }
 
-// function to initialize program
-function init() {
-    inquirer.prompt(questions).then((inquirerResponses) => {
-        writeToFile("./dist/team.html", generateHTML({...inquirerResponses}))
+            }
+        },
+        {
+            type: "input",
+            name: "engineerGit",
+            message: "What is the engineer's GitHub?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "Please enter the engineer's GitHub."
+            }
+        }
+    ])
+    .then ( answers => {
+        const engineer = new Engineer(answers.engineerName, answers.engineerID, answers.engineerEmail, answers.engineerGit);
+        teamMembers.push(engineer);
+        idArray.push(answers.engineerID);        
+        buildTeam();
     })
 }
 
-// function call to initialize program
-init();
+function buildTeam(){
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "memberChoice",
+            message: "What type of team member do you want to add?",
+            choices: ["Engineer", "Intern", "I don't want to add anyone else"]
+        
+        }
+    ])
+    .then(userChoice => {
+        switch(userChoice.memberChoice) {
+            case "Engineer":
+                engineerQuestions()
+                break;
+            case "Intern":
+                internQuestions()
+                break;
+            default: 
+                createTeam()            
+        }
+    })
+}
+
+const OUTPUT_DIR = path.resolve(__dirname, "dist")
+const outputPath = path.join(OUTPUT_DIR, "team.html");
+function createTeam() {
+    if (!fs.existsSync(OUTPUT_DIR)) {
+      fs.mkdirSync(OUTPUT_DIR)
+    }
+    fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
+  }
+
+
+
