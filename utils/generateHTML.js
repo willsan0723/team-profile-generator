@@ -13,9 +13,9 @@ if (role === "Manager") {
     <div class="card mx-auto mb-2" style="max-width: 250px">
     <h5 class="card-header bg-primary text-light">${name}</br><i class="fas fa-mug-hot"></i> Manager</h5>
     <ul class="list-group">
-        <li class="list-group-item style="font-size: 15px;"">ID: ${id}</li>
-        <li class="list-group-item style="font-size: 15px;"">Email Address: <a href="mailto: ${email}">${email}</a></li>
-        <li class="list-group-item style="font-size: 15px;"">Office Number: ${offNum}</li>
+        <li class="list-group-item" style="font-size: 15px;">ID: ${id}</li>
+        <li class="list-group-item" style="font-size: 15px;">Email Address: <a href="mailto: ${email}">${email}</a></li>
+        <li class="list-group-item" style="font-size: 15px;">Office Number: ${offNum}</li>
     </ul>
     </div>
     </div>`
@@ -29,9 +29,9 @@ if (role === "Engineer") {
     <div class="card mx-auto mb-2" style="max-width: 250px">
     <h5 class="card-header bg-primary text-light">${name}</br><i class="fas fa-glasses"></i> Engineer</h5>
     <ul class="list-group">
-        <li class="list-group-item style="font-size: 15px;"">ID: ${id}</li>
-        <li class="list-group-item style="font-size: 15px;"">Email Address: <a href="mailto: ${email}">${email}</a></li>
-        <li class="list-group-item style="font-size: 15px;"">GitHub: <a href="https://${git}" target="_blank">${git}</a></li>
+        <li class="list-group-item" style="font-size: 15px;">ID: ${id}</li>
+        <li class="list-group-item" style="font-size: 15px;">Email Address: <a href="mailto: ${email}">${email}</a></li>
+        <li class="list-group-item" style="font-size: 15px;">GitHub: <a href="https://${git}" target="_blank">${git}</a></li>
     </ul>
     </div>
     </div>`
@@ -45,9 +45,9 @@ if (role === "Intern") {
     <div class="card mx-auto mb-2" style="max-width: 250px">
     <h5 class="card-header bg-primary text-light">${name}</br><i class="fas fa-graduation-cap"></i> Intern</h5>
     <ul class="list-group">
-        <li class="list-group-item style="font-size: 15px;"">ID: ${id}</li>
-        <li class="list-group-item style="font-size: 15px;"">Email Address: <a href="mailto: ${email}">${email}</a></li>
-        <li class="list-group-item style="font-size: 15px;"">School: ${school}</li>
+        <li class="list-group-item" style="font-size: 15px;">ID: ${id}</li>
+        <li class="list-group-item" style="font-size: 15px;">Email Address: <a href="mailto: ${email}">${email}</a></li>
+        <li class="list-group-item" style="font-size: 15px;">School: ${school}</li>
     </ul>
     </div>
     </div>`
@@ -75,7 +75,7 @@ return `<!DOCTYPE html>
     </header>
     <main class="container">
         <div class="flex-row">
-        <div class="p-2 d-flex flex-wrap" style="width: 100%">
+        <div class="d-flex flex-wrap justify-content-center" style="width: 100%">
         ${concat}
         </div>
         </div>
