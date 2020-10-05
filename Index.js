@@ -255,8 +255,12 @@ function createTeam() {
     fs.writeFile(outputPath, generateHTML(teamMembers), err => {
         if (err) {
             throw new Error(err);
-        }        
+        }
+        else {
+            console.log("HTML file generated in /dist folder")
+        }
     });
+    
 }
 
 questions();
