@@ -65,10 +65,13 @@ function questions() {
             name: "managerOffice",
             message: "What is the manager's office telephone number?",
             validate: answer => {
-                if (answer !== "") {
-                    return true;
-                }
-                return "Please enter the manager's telephone number."
+                const pass = answer.match(
+                    /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+                )
+                if (!pass) {
+                    return `Formats accepted: XXX-XXX-XXXX, XXX.XXX.XXXX, XXX XXX XXXX`
+                }                
+                return true;
             }
         }
     ])
@@ -123,7 +126,7 @@ function engineerQuestions() {
                     /\S+@\S+\.\S+/
                 )
                 if (!pass) {
-                    return `An e-mail address is required to have an "@" and an "."`;
+                    return `An e-mail address is required to have an "@" and a ".com"`;
                 }
                 else {
                     return true;
@@ -136,10 +139,13 @@ function engineerQuestions() {
             name: "engineerGit",
             message: "What is the engineer's GitHub?",
             validate: answer => {
-                if (answer !== "") {
-                    return true;
+                const pass = answer.match(
+                    /github.com/g
+                )
+                if (!pass) {
+                    return `Address must contain github.com`;
                 }
-                return "Please enter the engineer's GitHub."
+                return true;
             }
         }
     ])
@@ -260,7 +266,11 @@ function createTeam() {
             console.log("HTML file generated in /dist folder")
         }
     });
-    
+    fs.copyFile('./src/style.css', './dist/style.css', err => {
+        if (err) {
+            throw new Error(err);
+        }
+});
 }
 
 questions();
