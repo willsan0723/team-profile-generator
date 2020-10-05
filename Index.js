@@ -137,15 +137,12 @@ function engineerQuestions() {
         {
             type: "input",
             name: "engineerGit",
-            message: "What is the engineer's GitHub?",
-            validate: answer => {
-                const pass = answer.match(
-                    /github.com/g
-                )
-                if (!pass) {
-                    return `Address must contain github.com`;
+            message: "What is the engineer's GitHub username?",
+            validate: answer => {                
+                if (answer !== "") {
+                    return true;
                 }
-                return true;
+                return "Please enter the engineer's name."
             }
         }
     ])
@@ -266,11 +263,6 @@ function createTeam() {
             console.log("HTML file generated in /dist folder")
         }
     });
-    fs.copyFile('./src/style.css', './dist/style.css', err => {
-        if (err) {
-            throw new Error(err);
-        }
-});
 }
 
 questions();

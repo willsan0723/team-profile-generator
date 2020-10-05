@@ -9,16 +9,15 @@ function generateHTML(input) {
 if (role === "Manager") {
     const offNum = data.getOfficeNumber();
     concat +=`
-    <div class="col-6">
-    <div class="card mx-auto mb-2" style="width: 300px">
-    <h5 class="card-header">${name}
-    
-    Manager</h5>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">ID: ${id}</li>
-        <li class="list-group-item">Email Address: <a href="mailto: ${email}">${email}</a></li>
-        <li class="list-group-item">Office Number: ${offNum}</li>
+    <div class="col-4 p-0">
+    <div class="card mx-auto mb-2" style="max-width: 250px">
+    <h5 class="card-header bg-primary text-light">${name}</br><i class="fas fa-mug-hot"></i> Manager</h5>
+    <ul class="list-group">
+        <li class="list-group-item style="font-size: 15px;"">ID: ${id}</li>
+        <li class="list-group-item style="font-size: 15px;"">Email Address: <a href="mailto: ${email}">${email}</a></li>
+        <li class="list-group-item style="font-size: 15px;"">Office Number: ${offNum}</li>
     </ul>
+    </div>
     </div>`
 }
 
@@ -26,16 +25,15 @@ if (role === "Manager") {
 if (role === "Engineer") {
     const git = data.getGit();    
     concat +=`
-    <div class="col-6">
-    <div class="card mx-auto mb-2" style="width: 300px">
-    <h5 class="card-header">${name}
-    
-    Engineer</h5>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">ID: ${id}</li>
-        <li class="list-group-item">Email Address: <a href="mailto: ${email}">${email}</a></li>
-        <li class="list-group-item">GitHub: <a href="${git}">${git}</a></li>
+    <div class="col-4 p-0">
+    <div class="card mx-auto mb-2" style="max-width: 250px">
+    <h5 class="card-header bg-primary text-light">${name}</br><i class="fas fa-glasses"></i> Engineer</h5>
+    <ul class="list-group">
+        <li class="list-group-item style="font-size: 15px;"">ID: ${id}</li>
+        <li class="list-group-item style="font-size: 15px;"">Email Address: <a href="mailto: ${email}">${email}</a></li>
+        <li class="list-group-item style="font-size: 15px;"">GitHub: <a href="https://${git}" target="_blank">${git}</a></li>
     </ul>
+    </div>
     </div>`
 }
 
@@ -43,16 +41,15 @@ if (role === "Engineer") {
 if (role === "Intern") {
     const school = data.getSchool();
     concat +=`
-    <div class="col-6">
-    <div class="card mx-auto mb-2" style="width: 300px">
-    <h5 class="card-header">${name}
-    
-    Intern</h5>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">ID: ${id}</li>
-        <li class="list-group-item">Email Address: <a href="mailto: ${email}">${email}</a></li>
-        <li class="list-group-item">School: ${school}</li>
+    <div class="col-4 p-0">
+    <div class="card mx-auto mb-2" style="max-width: 250px">
+    <h5 class="card-header bg-primary text-light">${name}</br><i class="fas fa-graduation-cap"></i> Intern</h5>
+    <ul class="list-group">
+        <li class="list-group-item style="font-size: 15px;"">ID: ${id}</li>
+        <li class="list-group-item style="font-size: 15px;"">Email Address: <a href="mailto: ${email}">${email}</a></li>
+        <li class="list-group-item style="font-size: 15px;"">School: ${school}</li>
     </ul>
+    </div>
     </div>`
 }
 })
@@ -68,17 +65,20 @@ return `<!DOCTYPE html>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Public+Sans:300i,300,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <header>
-    <div class="container flex-row justify-space-between align-center py-3">
-        <h1 class="page-title text-secondary bg-dark py-2 px-3">My Team</h1>
+    <div class="container align-center py-3">
+        <h1 class="page-title text-light bg-danger py-2 px-3 text-center">My Team</h1>
     </div>
     </header>
-    <main class="container my-5">
+    <main class="container">
+        <div class="flex-row">
+        <div class="p-2 d-flex flex-wrap" style="width: 100%">
         ${concat}
+        </div>
+        </div>
     </main>
     <footer class="container text-center py-3">
     <h3 class="text-dark">&copy; ${new Date().getFullYear()}</h3>
